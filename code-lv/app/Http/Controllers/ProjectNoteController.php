@@ -4,12 +4,11 @@ namespace CodeProject\Http\Controllers;
 
 
 
-use CodeProject\Repositories\ProjectRepository;
-use CodeProject\Services\ProjectService;
-
+use CodeProject\Repositories\ProjectNoteRepository;
+use CodeProject\Services\ProjectNoteService; 
 use Illuminate\Http\Request;
 
-class ProjectController extends Controller {
+class ProjectNoteController extends Controller {
 
     /**
      *
@@ -22,7 +21,7 @@ class ProjectController extends Controller {
     
     private $repository;
 
-    public function __construct(ProjectRepository $repository, ProjectService $service) {
+    public function __construct(ProjectNoteRepository $repository, ProjectNoteService $service) {
     
 
 
@@ -31,8 +30,8 @@ class ProjectController extends Controller {
         
     }
 
-    public function index() {
-        return $this->repository->all();
+    public function index($id) {
+        return $this->repository->findWhere(['project_id' => $id]);
     }
 
     /**

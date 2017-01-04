@@ -3,15 +3,13 @@ namespace CodeProject\Services;
 
 
 use CodeProject\Repositories\ClientRepository;
-use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Validators\ClientValidator;
-use CodeProject\Validators\ProjectValidator;
-use Prettus\Validator\Exceptions\ValidatorException;
+use Prettus\Validators\Exceptions\ValidatorException;
 
 
 
 
-class ProjectService {
+class ProjectNoteService {
 
 
     /**
@@ -25,7 +23,7 @@ class ProjectService {
     protected $validator;
     
 
-    public function __construct(ProjectRepository $repository, ProjectValidator $validator) {
+    public function __construct(ProjectNoteRepository $repository, ProjectNoteValidator $validator) {
 
         $this->repository = $repository;
         $this->validator = $validator;
