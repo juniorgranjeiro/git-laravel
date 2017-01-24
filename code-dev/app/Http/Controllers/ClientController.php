@@ -5,31 +5,31 @@ namespace CodeProject\Http\Controllers;
 use Illuminate\Http\Request;
 use CodeProject\Entities\Client;
 use CodeProject\Repositories\ClientRepository;
-use CodeProject\Services\ClientService; 
-class ClientController extends Controller {
+use CodeProject\Services\ClientService;
 
+class ClientController extends Controller {
     /**
      *
      * @var ClientRepository;
      */
+
     /**
      *
      * @var ClientService
      */
-    
     private $repository;
 
     public function __construct(ClientRepository $repository, ClientService $service) {
-    
+
 
 
         $this->repository = $repository;
         $this->service = $service;
-        
     }
 
     public function index() {
         return $this->repository->all();
+        return $this->repository->with(['owner', 'client'])->all();
     }
 
     /**
@@ -48,22 +48,22 @@ class ClientController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        
-     
-        return $this->service->create($request->all()); 
 
-               
-        
+
+        return $this->service->create($request->all());
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response    
      */
     public function show($id) {
-        return Client::find($id);
+        //return Client::find($id);
+       
+        return $this->repository->find($id);
+        return $this->repository->with(['owner', 'client'])->find($id);
     }
 
     /**
@@ -82,7 +82,6 @@ class ClientController extends Controller {
      */
     public function update(Request $request, $id) {
         return $this->service->update($request->all());
-        
     }
 
     /**
@@ -91,8 +90,20 @@ class ClientController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    //  public function destroy($id) {
+    //   return $this->repository->delete($id);
+
     public function destroy($id) {
-       return $this->repository->delete($id);
+        try {
+            $this->repository->find($id)->delete();
+            return ['success' => true, 'Projeto deletado com sucesso!'];
+        } catch (QueryException $e) {
+            return ['error' => true, 'Projeto não pode ser apagado pois existe um ou mais clientes vinculados a ele.'];
+        } catch (ModelNotFoundException $e) {
+            return ['error' => true, 'Projeto não encontrado.'];
+        } catch (\Exception $e) {
+            return ['error' => true, 'Ocorreu algum erro ao excluir o projeto.'];
+        }
     }
 
 }
