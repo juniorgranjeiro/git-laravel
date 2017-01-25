@@ -2,6 +2,7 @@
 
 namespace CodeProject\Http\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use CodeProject\Entities\Client;
 use CodeProject\Repositories\ClientRepository;
@@ -60,10 +61,12 @@ class ClientController extends Controller {
      * @return \Illuminate\Http\Response    
      */
     public function show($id) {
-        //return Client::find($id);
-       
-        return $this->repository->find($id);
-        return $this->repository->with(['owner', 'client'])->find($id);
+
+        try {
+            return $this->repository->find($id);
+        } catch (ModelNotFoundException $e) {
+            return ['error' => true, 'Projeto não encontrado.'];
+        }
     }
 
     /**
@@ -81,7 +84,17 @@ class ClientController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        return $this->service->update($request->all());
+        //  return $this->service->update($request->all());
+        try {
+            $this->repository->update($request->all(), $id);
+            return ['success' => true, 'Projeto atualizado com sucesso!'];
+        } catch (QueryException $e) {
+            return ['error' => true, 'Projeto não pode ser atualizado pois existe um ou mais clientes vinculados a ele.'];
+        } catch (ModelNotFoundException $e) {
+            return ['error' => true, 'Projeto não encontrado.'];
+        } catch (\Exception $e) {
+            return ['error' => true, 'Ocorreu algum erro ao atualizar o projeto.'];
+        }
     }
 
     /**

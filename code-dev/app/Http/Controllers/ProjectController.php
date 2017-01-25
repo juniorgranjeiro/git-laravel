@@ -2,6 +2,7 @@
 
 namespace CodeProject\Http\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use CodeProject\Entities\Project;
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Services\ProjectService;
@@ -60,11 +61,11 @@ class ProjectController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        //return Project::find($id);
-
-       // return $this->repository->with(['owner', 'client'])->all();
-        return $this->repository->find($id);
-        return $this->repository->with(['owner', 'project'])->all();
+        try {
+            return $this->repository->find($id);
+        } catch (ModelNotFoundException $e) {
+            return ['error' => true, 'Projeto não encontrado.'];
+        }
     }
 
     /**
@@ -82,7 +83,16 @@ class ProjectController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        return $this->service->update($request->all());
+        try {
+            $this->repository->update($request->all(), $id);
+            return ['success' => true, 'Projeto atualizado com sucesso!'];
+        } catch (QueryException $e) {
+            return ['error' => true, 'Projeto não pode ser atualizado pois existe um ou mais clientes vinculados a ele.'];
+        } catch (ModelNotFoundException $e) {
+            return ['error' => true, 'Projeto não encontrado.'];
+        } catch (\Exception $e) {
+            return ['error' => true, 'Ocorreu algum erro ao atualizar o projeto.'];
+        }
     }
 
     /**
@@ -91,9 +101,7 @@ class ProjectController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    //public function destroy($id) {
-    // return $this->repository->delete($id);
-
+    
     public function destroy($id) {
         try {
             $this->repository->find($id)->delete();
