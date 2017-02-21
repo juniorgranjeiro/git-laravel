@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ProjectNoteTableSeeder extends Seeder
+class ProjectTaskTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,9 +14,9 @@ class ProjectNoteTableSeeder extends Seeder
         
       //  \CodeProject\Entities\Project::truncate();
             
-        factory(\CodeProject\Entities\ProjectNote::class, 50)->create();
+        factory(\CodeProject\Entities\ProjectTask::class, 50)->create();
 
         
         
-    }   
+    }
 }

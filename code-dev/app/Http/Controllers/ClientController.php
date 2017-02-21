@@ -84,18 +84,17 @@ class ClientController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //  return $this->service->update($request->all());
-        try {
-            $this->repository->update($request->all(), $id);
-            return ['success' => true, 'Projeto atualizado com sucesso!'];
-        } catch (QueryException $e) {
-            return ['error' => true, 'Projeto não pode ser atualizado pois existe um ou mais clientes vinculados a ele.'];
-        } catch (ModelNotFoundException $e) {
-            return ['error' => true, 'Projeto não encontrado.'];
-        } catch (\Exception $e) {
-            return ['error' => true, 'Ocorreu algum erro ao atualizar o projeto.'];
+            try {
+                $this->repository->update($request->all(), $id);
+                return ['success' => true, 'Projeto atualizado com sucesso!'];
+            } catch (QueryException $e) {
+                return ['error' => true, 'Projeto não pode ser atualizado pois existe um ou mais clientes vinculados a ele.'];
+            } catch (ModelNotFoundException $e) {
+                return ['error' => true, 'Projeto não encontrado.'];
+            } catch (\Exception $e) {
+                return ['error' => true, 'Ocorreu algum erro ao atualizar o projeto.'];
+            }
         }
-    }
 
     /**
      * Remove the specified resource from storage.

@@ -30,5 +30,10 @@ Route::get('project/{id}', 'ProjectController@show');
 Route::delete('project/{id}', 'ProjectController@destroy');
 Route::put('project/{id}', 'ProjectController@update');
 
+Route::get('project', 'ProjectTaskController@index');
+Route::post('project', 'ProjectTaskController@store');
+Route::get('project/{id}', 'ProjectTaskController@show');
+Route::delete('project/{id}', 'ProjectTaskController@destroy');
+Route::put('project/{id}', 'ProjectTaskController@update');
 
 
