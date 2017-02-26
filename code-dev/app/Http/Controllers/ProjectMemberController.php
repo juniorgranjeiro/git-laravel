@@ -4,11 +4,11 @@ namespace CodeProject\Http\Controllers;
 
 
 
-use CodeProject\Repositories\ProjectTaskRepository;
-use CodeProject\Services\ProjectTaskService; 
+use CodeProject\Repositories\ProjectMemberRepository;
+use CodeProject\Services\ProjectMemnberService; 
 use Illuminate\Http\Request;
 
-class ProjectTaskController extends Controller {
+class ProjectMemberController extends Controller {
 
     /**
      *
@@ -21,7 +21,7 @@ class ProjectTaskController extends Controller {
     
     private $repository;
 
-    public function __construct(ProjectTaskRepository $repository, ProjectTaskService $service) {
+    public function __construct(ProjectMemberRepository $repository, ProjectMemberService $service) {
     
 
 

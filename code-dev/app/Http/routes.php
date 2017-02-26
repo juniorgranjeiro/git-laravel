@@ -22,6 +22,7 @@ Route::put('client/{id}', 'ClientController@update');
 
 
 Route::get('project/{id}/note', 'ProjectNoteController@index');
+Route::get('project/{id}/member', 'ProjectNoteController@index');
 
 
 Route::get('project', 'ProjectController@index');
