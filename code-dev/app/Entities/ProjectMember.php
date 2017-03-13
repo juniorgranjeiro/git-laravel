@@ -12,8 +12,26 @@ class ProjectMember extends Model implements Transformable
 
     protected $fillable = [
         
+        'project_id',
+        'member_id'
+        
         
         
     ];
 
+     public function projet(){
+        return $this->belongsTo(Project::class);
+    }
+    
+    
+     public function member(){
+        return $this->belongsTo(User::class);
+    }
+    
 }
+    
+    
+    
+    
+    
+    

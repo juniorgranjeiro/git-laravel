@@ -2,44 +2,52 @@
 
 namespace CodeProject\Http\Controllers;
 
-
-
-use CodeProject\Repositories\ProjectTaskRepository;
-use CodeProject\Services\ProjectTaskService; 
 use Illuminate\Http\Request;
+use CodeProject\Repositories\ProjectTaskRepository;
+use CodeProject\Services\ProjectTaskService;
 
-class ProjectTaskController extends Controller {
-
+    
+class ProjectTaskController extends Controller
+{
     /**
      *
-     * @var ClientRepository;
+        * @var ProjectTaskRepository
      */
     /**
      *
-     * @var ClientService
+     * @var type ProjectTaskService
      */
     
     private $repository;
-
-    public function __construct(ProjectTaskRepository $repository, ProjectTaskService $service) {
+    private $service;
     
-
-
+    public function __construct(ProjectTaskRepository $repository, ProjectTaskService $service)
+            {
         $this->repository = $repository;
         $this->service = $service;
-        
     }
+    
+    
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index($id)
+    {
+    //    return Client::all();
 
-    public function index($id) {
-        return $this->repository->findWhere(['project_id' => $id]);
+        return $this->repository->findWhere(['project_id'=>$id]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         //
     }
 
@@ -49,14 +57,20 @@ class ProjectTaskController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        
-     
-        return $this->service->create($request->all()); 
+    public function store(Request $request, $id)
+    {
+    
+        $data = $request->all();
+        $data['project_id'] = $id;
+        return $this->service->create($data);
+    }    
 
-               
-        
-    }
+
+
+//dd ($request->all());
+     //return $this->service->create($request->all());
+        //Client::create($request->all());
+     
 
     /**
      * Display the specified resource.
@@ -64,8 +78,17 @@ class ProjectTaskController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
-        return Client::find($id);
+    public function show($id, $taskId)
+    {
+       // if($this->repository->find($taskId));{
+        return $this->repository->find($taskId);
+        //if($this->repository->find($taskId)){
+
+  //  return "Registro não encontrado!";
+
+        
+      //  } 
+        
     }
 
     /**
@@ -74,6 +97,10 @@ class ProjectTaskController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function edit($id)
+    {
+        //
+    }
 
     /**
      * Update the specified resource in storage.
@@ -82,9 +109,9 @@ class ProjectTaskController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
-        return $this->service->update($request->all());
-        
+    public function update(Request $request, $id, $taskId)
+    {
+        return $this->service->update($request->all(), $taskId);
     }
 
     /**
@@ -93,8 +120,20 @@ class ProjectTaskController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
-       return $this->repository->delete($id);
-    }
+    public function destroy($id, $taskId)
+    {
+    //return $this->repository->delete($taskId);
+    
+    
+    if($this->repository->delete($taskId)){
+
+    return "Registro excluído com sucesso!";
 
 }
+
+return "Registro não excluído!";
+    }
+    
+    
+    }
+

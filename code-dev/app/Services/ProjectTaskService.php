@@ -1,17 +1,17 @@
 <?php
+
+
 namespace CodeProject\Services;
 
 
-use CodeProject\Repositories\ClientRepository;
-use CodeProject\Repositories\ProjectRepository;
-use CodeProject\Validators\ClientValidator;
-use CodeProject\Validators\ProjectValidator;
-use Prettus\Validator\Exceptions\ValidatorException;
+use CodeProject\Repositories\ProjectTaskRepository;
+use CodeProject\Validators\ProjectTaskValidator;
+use Prettus\Validators\Exceptions\ValidatorException;
 
 
 
 
-class ProjectService {
+class ProjectTaskService {
 
 
     /**
@@ -25,7 +25,7 @@ class ProjectService {
     protected $validator;
     
 
-    public function __construct(ProjectRepository $repository, ProjectValidator $validator) {
+    public function __construct(ProjectTaskRepository $repository, ProjectTaskValidator $validator) {
 
         $this->repository = $repository;
         $this->validator = $validator;
@@ -49,25 +49,7 @@ class ProjectService {
             ];
         }
     }
-    
-      public function isMember($project_id, $member_id)
-    {
-        $project = $this->repository->find($project_id)->members()->find(['member_id' => $member_id]);
-        if(count($project)){
-            return true;
-        }
-        return false;
-    }
-    
-      public function addMember($project_id, $member_id)
-    {
-        $project = $this->repository->find($project_id);
-        if(!$this->isMember($project_id, $member_id)){
-            $project->members()->attach($member_id);
-        }
-    }
-    
-    
+
     public function update(array $data, $id) 
     {
         try {
@@ -82,10 +64,18 @@ class ProjectService {
             ];
         }
     }    
-}
 
     
+    public function delete($id)
+    {
+        $projectTask = $this->repository->skipPresenter()->find($id);
+        return $projectTask->delete();
+    
+    
+        }
 
+    
+}
     
     
     

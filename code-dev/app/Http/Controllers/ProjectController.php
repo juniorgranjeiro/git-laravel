@@ -54,6 +54,37 @@ class ProjectController extends Controller {
         return $this->service->create($request->all());
     }
 
+     public function members($id)
+    {
+        try {
+            $members = $this->repository->find($id)->members()->get();
+            if (count($members)) {
+                return $members;
+            }
+            return $this->erroMsgm('Esse projeto ainda não tem membros.');
+        } catch (ModelNotFoundException $e) {
+            return $this->erroMsgm('Projeto não encontrado.');
+        } catch (QueryException $e) {
+            return $this->erroMsgm('Cliente não encontrado.');
+        } catch (\Exception $e) {
+            return $this->erroMsgm('Ocorreu um erro ao exibir os membros do projeto.');
+        }
+    }
+    
+    
+      public function addMember($project_id, $member_id)
+    {
+        try {
+            return $this->service->addMember($project_id, $member_id);
+        } catch (ModelNotFoundException $e) {
+            return $this->erroMsgm('Projeto não encontrado.');
+        } catch (QueryException $e) {
+            return $this->erroMsgm('Cliente não encontrado.');
+        } catch (\Exception $e) {
+            return $this->erroMsgm('Ocorreu um erro ao inserir o membro.');
+        }
+    }
+
     /**
      * Display the specified resource.
      *
@@ -68,6 +99,23 @@ class ProjectController extends Controller {
         }
     }
 
+    public function removeMember($project_id, $member_id)
+    {
+        $project = $this->repository->find($project_id);
+        $project->members()->detach($member_id);
+        return $project->members()->get();
+    }
+    
+     private function erroMsgm($mensagem)
+    {
+        return [
+            'error' => true,
+            'message' => $mensagem,
+        ];
+    
+    
+    }
+    
     /**
      * Show the form for editing the specified resource.
      *

@@ -17,9 +17,9 @@ class ProjectTaskValidator extends LaravelValidator{
         
         'name'=> 'required',
         'project_id'=> 'required|integer',
-        'start_date'=> 'required',
-        'due_date'=>'required',
-        'status'=>'required'
+        'start_date'=> 'date',
+        'due_date'=>'date',
+        'status'=>'integer'
         
         
         
