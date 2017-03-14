@@ -6,6 +6,8 @@ namespace CodeProject\Services;
 
 use CodeProject\Repositories\ProjectTaskRepository;
 use CodeProject\Validators\ProjectTaskValidator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Prettus\Validators\Exceptions\ValidatorException;
 
 
@@ -15,12 +17,12 @@ class ProjectTaskService {
 
 
     /**
-     * @var ClientRepository
+     * @var ProjectTaskRepository
      */
     protected $repository;
     
     /**
-     * @var ClientValidator
+     * @var ProjectTaskValidator
      */
     protected $validator;
     
