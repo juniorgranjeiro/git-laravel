@@ -3,12 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Projeto/www/html/code-dev/app/Http/routes.php</file>
-            <file>file:/C:/Projeto/www/html/code-dev/config/app.php</file>
-            <file>file:/C:/Projeto/www/html/code-dev/app/Http/Controllers/ClientController.php</file>
-            <file>file:/C:/Projeto/www/html/code-dev/database/migrations/2016_11_13_010159_create_clients_table.php</file>
-            <file>file:/C:/Projeto/www/html/code-dev/database/factories/ModelFactory.php</file>
-            <file>file:/C:/Projeto/www/html/code-dev/database/seeds/.gitkeep</file>
+            <file>file:/C:/Laravel/www/html/code-dev/app/Http/routes.php</file>
         </group>
     </open-files>
 </project-private>

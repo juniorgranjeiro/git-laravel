@@ -91,13 +91,33 @@ class ProjectController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
-        try {
+    public function show($id)
+   {
+        $userId = \Authorizer::getResourceOwnerId();
+        
+        
+         if ($this->repository->isOwner($id, $userId) == false) {
+         return ['success' => false];
+         
+         
+         }
+//return ['userId'=>\Authorizer::getResourceOwnerId()];
+
+
+//$this->checkProjectOwner($id);
+      // if ($this->repository->isOwner($id, )){
+        
+        return $this->repository->find($id);
+   }
+
+        /**try {
             return $this->repository->find($id);
         } catch (ModelNotFoundException $e) {
             return ['error' => true, 'Projeto não encontrado.'];
         }
-    }
+         * 
+         */
+
 
     public function removeMember($project_id, $member_id)
     {

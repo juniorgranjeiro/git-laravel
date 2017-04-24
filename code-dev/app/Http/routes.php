@@ -19,7 +19,15 @@ Route::post('oauth/access_token', function() {
 });
 
 
-Route::get('client', ['middleware'=> 'oauth', 'uses'=>'ClientController@index']);
+Route::group(['middleware'=> 'oauth'], function(){
+Route::resource('client', 'ClientController', ['except'=> ['create','edit']]);
+
+Route::group(['prefix' => 'project'], function (){
+Route::resource('', 'ProjectController', ['except'=> ['create','edit']]);
+Route::get('/{id}/note', 'ProjectNoteController@index');
+});
+
+//Route::get('client', ['middleware'=>'oauth', 'uses'=>'ClientController@index']);
 //Route::get('client', 'ClientController@index');
 
 Route::post('client', 'ClientController@store');
@@ -28,7 +36,7 @@ Route::delete('client/{id}', 'ClientController@destroy');
 Route::put('client/{id}', 'ClientController@update');
 
 
-Route::get('project/{id}/note', 'ProjectNoteController@index');
+//Route::get('project/{id}/note', 'ProjectNoteController@index');
 
         Route::get('project/{id}/member', 'ProjectController@members');
         //Route::get('project/{id}/member/{member_id}', 'ProjectController@showmember');
@@ -42,6 +50,7 @@ Route::delete('project/{id}', 'ProjectController@destroy');
 Route::put('project/{id}', 'ProjectController@update');
 
 
+}); 
         Route::get('project/{id}/task', 'ProjectTaskController@index');
         Route::get('project/{id}/task/{taskId}', 'ProjectTaskController@show');
         Route::post('project/{id}/task', 'ProjectTaskController@store');
