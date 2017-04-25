@@ -28,9 +28,12 @@ class ProjectController extends Controller {
         $this->service = $service;
     }
 
-    public function index() {
-        return $this->repository->all();
-        return $this->repository->with(['owner', 'project'])->find($id);
+    public function index() 
+   {
+       //   return $this->repository->all();
+       //  return $this->repository->with(['owner', 'project'])->find($id);
+    
+    return $this->repository->findWhere(['owner_id' => \Authorizer::getResourceOwnerId()]);
     }
 
     /**
@@ -54,8 +57,7 @@ class ProjectController extends Controller {
         return $this->service->create($request->all());
     }
 
-     public function members($id)
-    {
+    public function members($id) {
         try {
             $members = $this->repository->find($id)->members()->get();
             if (count($members)) {
@@ -70,10 +72,8 @@ class ProjectController extends Controller {
             return $this->erroMsgm('Ocorreu um erro ao exibir os membros do projeto.');
         }
     }
-    
-    
-      public function addMember($project_id, $member_id)
-    {
+
+    public function addMember($project_id, $member_id) {
         try {
             return $this->service->addMember($project_id, $member_id);
         } catch (ModelNotFoundException $e) {
@@ -91,53 +91,48 @@ class ProjectController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-   {
-        /**$userId = \Authorizer::getResourceOwnerId();
-        
-        
-         if ($this->repository->isOwner($id, $userId) == false) {
-         return ['success' => false];
-         
-         
-         }
+    public function show($id) {
+        /*         * $userId = \Authorizer::getResourceOwnerId();
+
+
+          if ($this->repository->isOwner($id, $userId) == false) {
+          return ['success' => false];
+
+
+          }
          * 
          */
 //return ['userId'=>\Authorizer::getResourceOwnerId()];
-
-
 //$this->checkProjectOwner($id);
-      // if ($this->repository->isOwner($id, )){
-        
-        return $this->repository->find($id);
-   }
-
-        /**try {
-            return $this->repository->find($id);
-        } catch (ModelNotFoundException $e) {
-            return ['error' => true, 'Projeto não encontrado.'];
+        // if ($this->repository->isOwner($id, )){
+        if ($this->checkProjectOwner($id)==false)
+        {
+            return ['error' => 'Access Forbidden'];
         }
-         * 
-         */
+        return $this->repository->find($id);
+    }
 
+    /*     * try {
+      return $this->repository->find($id);
+      } catch (ModelNotFoundException $e) {
+      return ['error' => true, 'Projeto não encontrado.'];
+      }
+     * 
+     */
 
-    public function removeMember($project_id, $member_id)
-    {
+    public function removeMember($project_id, $member_id) {
         $project = $this->repository->find($project_id);
         $project->members()->detach($member_id);
         return $project->members()->get();
     }
-    
-     private function erroMsgm($mensagem)
-    {
+
+    private function erroMsgm($mensagem) {
         return [
             'error' => true,
             'message' => $mensagem,
         ];
-    
-    
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -171,7 +166,6 @@ class ProjectController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
     public function destroy($id) {
         try {
             $this->repository->find($id)->delete();
@@ -185,4 +179,11 @@ class ProjectController extends Controller {
         }
     }
 
+    private function checkProjectOwner($projectId)
+    {
+        $userId = \Authorizer::getResourceOwnerId();
+
+        return $this->repository->isOwner($projectId, $userId);
+    }
 }
+
