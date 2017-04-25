@@ -93,7 +93,7 @@ class ProjectController extends Controller {
      */
     public function show($id)
    {
-        $userId = \Authorizer::getResourceOwnerId();
+        /**$userId = \Authorizer::getResourceOwnerId();
         
         
          if ($this->repository->isOwner($id, $userId) == false) {
@@ -101,6 +101,8 @@ class ProjectController extends Controller {
          
          
          }
+         * 
+         */
 //return ['userId'=>\Authorizer::getResourceOwnerId()];
 
 
