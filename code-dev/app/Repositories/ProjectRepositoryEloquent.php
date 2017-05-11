@@ -7,6 +7,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Entities\Project;
 use CodeProject\Validators\ProjectValidator;
+use CodeProject\Presenters\ProjectPresenters;
 
 /**
  * Class ProjectRepositoryEloquent
@@ -49,4 +50,10 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
   return false;
     
     }     
+    
+    public function presenter()
+    {
+        return ProjectPresenter::class;
+    }
   }
+  
