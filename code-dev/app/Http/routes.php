@@ -35,6 +35,7 @@ Route::resource('project', 'ProjectController', ['except'=> ['create','edit']]);
 Route::group(['prefix' => 'project'], function (){
     
     Route::get('/{id}/note', 'ProjectNoteController@index');
+    Route::get('project', 'ProjectController@index');
 });
 
 
@@ -51,11 +52,13 @@ Route::put('client/{id}', 'ClientController@update');
         Route::post('project/{id}/member/{member_id}', 'ProjectController@addMember');
         Route::delete('project/{id}/member/{member_id}', 'ProjectController@removeMember');
 
-Route::get('project', 'ProjectController@index');
+
 Route::post('project', 'ProjectController@store');
 Route::get('project/{id}', 'ProjectController@show');
 Route::delete('project/{id}', 'ProjectController@destroy');
 Route::put('project/{id}', 'ProjectController@update');
+
+Route::post('project/{id}/file','ProjectFileController@store');
 
 
 });
