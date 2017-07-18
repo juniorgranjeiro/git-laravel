@@ -7,6 +7,8 @@ use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Validators\ClientValidator;
 use CodeProject\Validators\ProjectValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;    
 
 
 
@@ -82,7 +84,18 @@ class ProjectService {
             ];
         }
     }    
+
+    public function createFile(array $data) {
+        
+         Storage::put($data['name'] . "." . $data['extension'], File::get($data['file']));
+    
+    }    
+   
+    
 }
+
+
+
 
     
 

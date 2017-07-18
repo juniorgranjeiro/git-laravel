@@ -51,19 +51,22 @@ class ProjectFileController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-
-
-        // $file = $request->file('file');
-        // $extension = $file->getClientOriginalExtension();
-         echo $request->name;die;
-        
-          Storage::put($request->name . "." . $extension, File::get($file));
-         
+    public function store(Request $request)
+   
+    {
+        $file = $request->file('file');
+        $extension = $file->getClientOriginalExtension();
+            
+            $data['file'] = $file;    
+            $data['extension'] = $extension;
+            $data['name'] = $request->name;
        
-    }
     
-
+            $this->service->createFile($data);
+    }
+       
+        
+        
     public function members($id) {
         try {
             $members = $this->repository->find($id)->members()->get();

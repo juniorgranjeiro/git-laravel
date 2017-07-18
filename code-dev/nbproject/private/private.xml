@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Laravel/www/html/code-dev/app/Presenters/ProjectPresenters.php</file>
+            <file>file:/C:/Laravel/www/html/code-dev/app/Http/Controllers/ProjectFileController.php</file>
             <file>file:/C:/Laravel/www/html/code-dev/app/Repositories/ProjectRepositoryEloquent.php</file>
             <file>file:/C:/Laravel/www/html/code-dev/app/Http/Middleware/CheckProjectOwner.php</file>
-            <file>file:/C:/Laravel/www/html/code-dev/app/Transformers/ProjectTransformer.php</file>
-            <file>file:/C:/Laravel/www/html/code-dev/app/Http/Controllers/ProjectMemberController.php</file>
             <file>file:/C:/Laravel/www/html/code-dev/app/Http/routes.php</file>
+            <file>file:/C:/Laravel/www/html/code-dev/app/Http/Controllers/ProjectNoteController.php</file>
             <file>file:/C:/Laravel/www/html/code-dev/app/Http/Controllers/ProjectController.php</file>
         </group>
     </open-files>
